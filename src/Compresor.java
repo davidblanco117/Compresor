@@ -11,93 +11,54 @@ public class Compresor {
 	}
 	
 	
-	public byte[] prepararByte(String cad) {
-		char b1 = ' ';
-		byte bit1= (byte) b1;
-		String cadenaFinal="";
-		byte[] cadenaBytes= new byte[cad.length()/8+1];
-		int i=0;
-		byte inicial= (byte) (b1<<2);
-		byte fin= (byte)(bit1&~bit1);
-		int j=i;
-		while(i<cad.length()) {
-			byte aux=0;
-			if(cad.charAt(i)=='1') {
-				aux= (byte) (inicial>>>j);
-				fin=(byte)(aux|fin);
-			}
-			i++;
-			j++;
-			if(j==8) {
-				j=0;
-				cadenaFinal=cadenaFinal.concat(String.valueOf((char) fin));
-				cadenaBytes[i]=fin;
-				fin= (byte)(bit1&~bit1);
-			}
-			
-		}
-		
-		System.out.println(cadenaFinal);
 	
-
-		return cadenaBytes;
-		
-	}
-	
-	public String aBinario(int numero) {
-
-		String retorno = "";
-		while (numero > 1) {
-			if (numero % 2 == 1) {
-				String aux = retorno;
-				retorno = "1";
-				retorno = retorno.concat(aux);
-			} else {
-				String aux = retorno;
-				retorno = "0";
-				retorno = retorno.concat(aux);
-			}
-			numero = numero / 2;
-		}
-		String aux = retorno;
-		retorno = "1";
-		retorno = retorno.concat(aux);
-
-		return retorno;
-	}
-
-	public void grabarBinario(byte[] bytes, FileOutputStream fileSal) {
+	public void grabarBinario(String cadena, FileOutputStream fileSal) throws IOException {
 
 		DataOutputStream ds;
+		int i=0;
+		int j=0;
+		byte cadenaDeByte= (byte)(' '>>>6);
+		byte byteAuxiliar= (byte)(' '>>>5);
 		
 		ds = new DataOutputStream(fileSal);
-
-		try {
-
+		
+		
+		while(i<cadena.length()) {
 			
-			ds.write(bytes);
-			ds.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			
+			cadenaDeByte=(byte)(cadenaDeByte<<1);
+			
+			if(cadena.charAt(i)=='1') 
+				cadenaDeByte=(byte)(cadenaDeByte|byteAuxiliar);
+			
+			i++;
+			j++;
 
-	}
-
-	private String comprimir(String cadena) {
-		int i = 0;
-		String retorno = "";
-		while (i < cadena.length()) {
-			if (i % 8 == 0)
-				i++;
-			else {
-				retorno = retorno.concat(cadena.substring(i, i + 1));
-				i++;
+			if(j==8) {
+				ds.write(cadenaDeByte);
+				System.out.print((char)cadenaDeByte);
+				cadenaDeByte= (byte)(' '>>>6);
+				j=0;
 			}
-		}
 
-		return retorno;
+		}			
+			ds.close();
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public void comprimir(File file) {
 
@@ -119,8 +80,6 @@ public class Compresor {
 
 				c = fr.read();
 			}
-			FileOutputStream fileSal = new FileOutputStream("comprimido.dat");
-			grabarBinario(prepararByte(comprimir(cadena)), fileSal);
 
 			fr.close();
 
