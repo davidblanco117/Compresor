@@ -1,0 +1,862 @@
+Hoy Platzi tiene la mejor versión de App Móvil que hayamos tenido jamás, pero detrás de este producto hay varias historias; -Qué tecnologías usamos, en cuánto tiempo se construyó, qué nuevos features tiene, qué esperar en futuras versiones e incluso las charlas difíciles con el CEO acerca de cuándo lanzar.
+
+Comencemos por aclarar qué tecnologías, lenguajes de programación, frameworks y librerías usamos para hacer esta App. (Después hablamos de las discusiones con Freddy)
+
+Comencemos por la parte de enfrente:
+
+Frontend:
+Las vistas están hechas con React Native y creamos los componentes más importantes en lenguajes nativos con Kotlin en Android y Objective-C en iOS. Las tres características que están programadas en lenguaje nativo son: El reproductor de video y audio, las descargas y el chromecast.
+
+Librerías
+La gran mayoría de las librerías fueron creadas por nosotros y únicamente utilizamos tres que son mantenidas por la comunidad. La arquitectura es Flux, es decir, utilizamos Redux para manejar nuestro estado junto con Redux Thunk.
+
+Tener nuestras propias librerías nos a permitido decidir el ritmo con el que actualizamos a las últimas versiones de React Native. La app anterior de Platzi dependía de librerías de terceros que no nos permitía actualizar tan rápido, eso nos llevó a un serio problema de escalabilidad. Aprendimos de esto.
+
+¿Qué librerías escribimos?
+El login con Twitter, la integración con Google Analytics, nuestro propio sistema de caché, los módulos de pagos, rotación del teléfono, el reproductor de video con soporte a subtítulos, el reproductor de audio para podcast y cursos en audio, el módulo de Chromecast y el módulo de Descargas. Yep, todo eso.
+
+PD: Hay planes de hacer la librerías Open Source, ya les iremos contando.
+
+Toda esta combinación de decisiones se ve reflejada en el buen rendimiento de la aplicación. Por ejemplo, logramos una reducción del tamaño final de la App de 32mb a 27mb.
+Backend:
+La arquitectura de Platzi está basada en Microservicios, esto no es un secreto. Nuestro stack está formado por Python + Django, Docker y Postgres. (¿Sabías que hace unos meses pasamos de Mysql a Postgres?)
+
+APIs
+Un dilema interesante fue; Mejorar el API que ya teníamos o crear uno nuevo desde cero. El resultado fue gris. Decidimos crear un nuevo API reutilizable desde cualquier parte de la plataforma escrito especialmente para la app y además reutilizar algunos endpoints que aún tenía sentido mantener.
+
+Uno de nuestros objetivos principales en esta misión fue buscar reducir en un 50% el tiempo de carga del endpoint de cursos de Platzi. Construir un nuevo API era la mejor oportunidad para lograrlo. Spoiler Alert: Lo logramos, se redujo a la mitad la espera en consultas.
+
+Para el API utilizamos Django Rest Framework, toda la arquitectura y las clases que se derivan a partir de allí (ViewSets, ModelViewSets, Serializers, etc). Uno de los mayores problemas que enfrentamos al utilizar Django Rest Framework es la optimización de los serializadores.
+
+Un poquito de profundidad en este punto: Teníamos el problema del N+1 y era el mayor responsable del tiempo alto de respuesta. Implementé el eager loading (en Django prefetch_related) en todas las consultas que debían tener resultados anidados. Si quieres entender más este punto, te recomiendo este blog post
+
+backend.png
+Diseño:
+Para comenzar con las fases de diseño, primero decidimos qué características de las versión anterior debíamos mantener y cuáles debíamos añadir con base en las solicitudes de nuestros estudiantes. Decidimos mantener las piezas núcleo de la app: cursos, clases, descargas y perfil.
+
+Después planteamos el flujo completo desde el registro hasta la pasarela de pagos y realizamos bocetos que llenaron una pared completa en una sala de reuniones, lo llamamos el cuarto de la App.
+
+Cuando ya teníamos un flujo consistente hicimos los wireframes utilizando Adobe XD, después creamos cada componente dinámico en Sketch, por último documentamos y creamos un sistema de diseño.
+
+disenno.png
+El equipo:
+team2.png
+Lanzamiento:
+Fue por el tercer mes de desarrollo que tuvimos una charla dura con Freddy (el CEO), fue una de esas charlas difíciles, orientadoras, de las que forjan el carácter. Cuando salimos de esa reunión teníamos solo una cosa bien clara: debíamos validar con estudiantes reales lo que estábamos haciendo.
+
+Nosotros como AppTeam queríamos lanzar hasta tener todo perfectamente pulido, pero el camino ideal no es así, había llegado el momento de validar el trabajo de meses.
+
+El nivel de aplicación móvil que lanzamos es un proyecto muy ambicioso, llevó un poco más de medio año y necesitó el trabajo de un equipo 100% dedicado. A nivel negocio, es arriesgado para la empresa lanzar y que que nuestros estudiantes no usen la aplicación.
+
+Es así como decidimos sacar un release en beta para Android, con nuestra mayor base de usuarios. Mientras, Marcela Arias y Julián Mora, UX designer de Platzi, realizaron una serie de pruebas de usuario con estudiantes seleccionados, aquí empezamos a recibir feedback real de nuestro estudiantes.
+
+timeline.png
+Sumado todo el feedback que los estudiantes dejaron logramos corregir errores, validamos que el camino que habíamos tomado era el correcto y finalmente, un 30 de Septiembre, cuando decidimos que estaba todo funcional; lanzamos a producción la nueva App de Platzi.
+
+Descarga para Android
+Descarga para iOS
+Screen Shot 2019-10-15 at 22.04.29.png
+Screen Shot 2019-10-15 at 22.04.15.png
+Screen Shot 2019-10-15 at 22.04.02.png
+Screen Shot 2019-10-15 at 22.03.49.png
+Screen Shot 2019-10-15 at 22.03.34.pngLas mujeres permanecen muy poco representadas en carreras de ciencias, tecnología, ingeniería y matemáticas, o STEM.
+
+En el campo de la ingeniería, por ejemplo, las mujeres en Estados Unidos obtuvieron menos del 20 por ciento de los doctorados en el 2014. En México, el 89% de investigadores de alto nivel en las universidades publicas son hombres.
+
+Tales brechas no son el resultado de diferencias en la capacidad intelectual. Las niñas actualmente conforman más de la mitad de la población estudiantil superdotada de EEUU, por ejemplo.
+
+Si las niñas tienen la inteligencia necesaria para tener éxito en carreras STEM, ¿qué factores explican por qué no se interesan en las carreras relacionadas con estos campos?
+
+Read more: Here's how to encourage more girls to pursue science and math careers
+
+Hay dos tipos de criterios que desalientan a las niñas a estudiar carreras STEM a temprana edad: a) estereotipos negativos sobre sus habilidades intelectuales; y b) estereotipos sobre las personas que trabajan en carreras STEM que son calificadas como “nerds.”
+
+Como investigadores que analizan cómo estereotipos y otros factores psicológicos podrían desviar a las niñas de estudiar carreras relacionadas con las matemáticas y las ciencias en general, creemos que los padres y los educadores pueden ayudar a cambiar las cosas y aminorar las diferencias de género en lo referente a carreras STEM.
+
+1. Enséñeles una mentalidad de crecimiento
+Ya desde el primer grado, las niñas tienen menos probabilidades que los niños de asociar su género con las habilidades intelectuales.
+
+Teniendo en cuenta cuán generalizados son estos estereotipos, ¿cómo pueden padres y profesores intervenir para proteger a las niñas de la suposición de que son menos capaces intelectualmente – por tanto, menos idóneas para estudiar carreras STEM – que los niños?
+
+Una posible estrategia es convencerlas a las niñas de que sus habilidades académicas pueden desarrollarse.
+
+Los estereotipos negativos se basan en la suposición de que las niñas carecen de la capacidad innata necesaria para el éxito. Al enfatizar en cómo las habilidades cambian y se desarrollan en la medida que pasa el tiempo desafiamos esta convicción.
+
+Al promover un concepto de crecimiento, es esencial transmitir el esfuerzo y la capacidad de crear estrategias, y que esta es una verdad para todos, no solo para las niñas.
+
+Por ejemplo, un maestro o padre podría decir: “Cualquier persona que quiera ser buena en matemáticas debe resolver muchos problemas, en especial, los más difíciles para entrenar su capacidad de aprendizaje”. A menos que se haga un esfuerzo para que esto sea normal para todos, padres y profesores podrían sugerir de manera involuntaria que las niñas tienen que hacer un esfuerzo extraordinario para compensar sus bajas habilidades.
+
+2. Enséñeles a valorar los errores
+Otro componente para fomentar una mentalidad de crecimiento es enmarcar el fracaso como una oportunidad de aprendizaje en lugar de algo que debe evitarse u ocultar de la vista de todos cuando sucede.
+
+Esto se logra centrándose en el proceso de aprendizaje – por ejemplo, descubrir de dónde provienen los errores y crear nuevas estrategias para la próxima vez. Cuando los niños vean cómo sus esfuerzos han sido fructíferos, es más probable que observen las habilidades para estudiar carreras STEM desde una perspectiva de crecimiento.
+
+
+Una alumna en Indiana, EEUU sostiene una foto de Mae Jemison, la primera astronauta afroamericana. Bob Gwaltney/AP
+3. Hábleles sobre mujeres exitosas
+Los estereotipos también pueden cuestionarse dándoles a las niñas ejemplos de mujeres que han tenido éxito en carreras STEM.
+
+Al describir a estas mujeres es clave decir que tienen algo en común con ellas; es importante destacar cómo se convirtieron en científicas, lo que ayudará a las niñas a visualizarse a sí mismas recorriendo un camino de éxito.
+
+4. Bríndeles oportunidades de éxito
+Otra estrategia es darles a las niñas oportunidades para que logren éxito en tareas relacionadas con carreras STEM para comenzar a construir su confianza.
+
+Por ejemplo, un maestro podría enmarcar una asignación de programación como un juego, lo que podría ayudar a las niñas a sentirse más motivadas y capaces del éxito.
+
+5. Combata falsos estereotipos sobre carreras STEM
+Cuando los niños se imaginan a sí mismos realizando trabajos diferentes en el futuro, podrían preguntarse si tienen algo en común con las personas que desempeñan esos trabajos. Un desajuste entre el concepto que tiene un niño y su impresión sobre los individuos de determinada esfera puede hacer que esta carrera no le parezca atractiva.
+
+Desafortunadamente, la forma en que los medios describen a las personas que estudiaron carreras STEM son a menudo estrechas y perpetúan falsos estereotipos, como que los científicos son excéntricos, “nerds” o “geeky” (obsesivos de las computadores y desvinculados de la realidad).
+
+Del mismo modo, el trabajo de los científicos se asume como solitario y aislante. También se considera que persiguen objetivos egocéntricos, como satisfacer su propia curiosidad, y que procurar el bien ajeno no está entre sus objetivos.
+
+Estas imágenes sociales actúan como una barrera para las niñas en particular: a las niñas se les educa para que se adapten a las necesidades comunes de determinado grupo social y se consideren a sí mismas diferentes del científico promedio y esto las lleva a inclinarse a esferas en las que se puedan encontrar a personas con las que se identifiquen con facilidad y que tienen objetivos más altruistas.
+
+Sin embargo, muchos científicos modernos no se ajustan a la imagen de “geeky,” excéntrico solitario, y tienen un gran sentido de la colaboración y el apoyo a otras personas.
+
+6. Presente ejemplos de personas que hicieron carreras STEM
+Para contrarrestar los efectos de estas imágenes, los padres y maestros pueden presentar a los niños ejemplos diversos y fáciles de identificar de personas que han seguido una carrera STEM. Pueden hacerlo online, como Así luce un científico y Skype a Scientist.
+
+Los padres y maestros también pueden decirles a los niños que los científicos a menudo trabajan en equipo e inventan cosas que ayudan a las personas en su vida cotidiana. Es probable que este tipo de mensajes ayude tanto a las niñas como a los niños porque revelan propósitos más profundos para aprender temas relacionados con carreras STEM.
+
+7. Cree un ambiente que promueva las ciencias
+Algunos han atribuido la baja representación de las mujeres en carreras STEM a sus preferencias inherentes. Sin embargo, la evidencia científica indica que estas preferencias están determinadas por conceptos culturales; y no por diferencias innatas.
+
+Los padres y educadores se encuentran en una excelente situación para ayudar a eliminar los estereotipos que desestimulan a las niñas a convertirse en científicas. Y creemos que una de las mejores maneras de hacerlo es concebir entornos que promuevan la idea de que las carreras científicas están a su alcance.
+
+This article was originally published in English
+
+igualdad de género
+The Conversation US en español
+mujeres
+niños
+matemáticas
+estudiantes
+Ciencias
+ Tweet Share Get newsletter
+Before you go...
+Journalists and researchers have one thing in common: we seek the truth. I work with academics and scientists every day to communicate knowledge, discovery, and facts to readers like you who also care about evidence over opinion. If you think this is important – and I’m confident you do – please help The Conversation grow with a gift in whatever amount you can afford. Thank you.
+
+
+Martin LaMonica
+Deputy EditorLas mujeres permanecen muy poco representadas en carreras de ciencias, tecnología, ingeniería y matemáticas, o STEM.
+
+En el campo de la ingeniería, por ejemplo, las mujeres en Estados Unidos obtuvieron menos del 20 por ciento de los doctorados en el 2014. En México, el 89% de investigadores de alto nivel en las universidades publicas son hombres.
+
+Tales brechas no son el resultado de diferencias en la capacidad intelectual. Las niñas actualmente conforman más de la mitad de la población estudiantil superdotada de EEUU, por ejemplo.
+
+Si las niñas tienen la inteligencia necesaria para tener éxito en carreras STEM, ¿qué factores explican por qué no se interesan en las carreras relacionadas con estos campos?
+
+Read more: Here's how to encourage more girls to pursue science and math careers
+
+Hay dos tipos de criterios que desalientan a las niñas a estudiar carreras STEM a temprana edad: a) estereotipos negativos sobre sus habilidades intelectuales; y b) estereotipos sobre las personas que trabajan en carreras STEM que son calificadas como “nerds.”
+
+Como investigadores que analizan cómo estereotipos y otros factores psicológicos podrían desviar a las niñas de estudiar carreras relacionadas con las matemáticas y las ciencias en general, creemos que los padres y los educadores pueden ayudar a cambiar las cosas y aminorar las diferencias de género en lo referente a carreras STEM.
+
+1. Enséñeles una mentalidad de crecimiento
+Ya desde el primer grado, las niñas tienen menos probabilidades que los niños de asociar su género con las habilidades intelectuales.
+
+Teniendo en cuenta cuán generalizados son estos estereotipos, ¿cómo pueden padres y profesores intervenir para proteger a las niñas de la suposición de que son menos capaces intelectualmente – por tanto, menos idóneas para estudiar carreras STEM – que los niños?
+
+Una posible estrategia es convencerlas a las niñas de que sus habilidades académicas pueden desarrollarse.
+
+Los estereotipos negativos se basan en la suposición de que las niñas carecen de la capacidad innata necesaria para el éxito. Al enfatizar en cómo las habilidades cambian y se desarrollan en la medida que pasa el tiempo desafiamos esta convicción.
+
+Al promover un concepto de crecimiento, es esencial transmitir el esfuerzo y la capacidad de crear estrategias, y que esta es una verdad para todos, no solo para las niñas.
+
+Por ejemplo, un maestro o padre podría decir: “Cualquier persona que quiera ser buena en matemáticas debe resolver muchos problemas, en especial, los más difíciles para entrenar su capacidad de aprendizaje”. A menos que se haga un esfuerzo para que esto sea normal para todos, padres y profesores podrían sugerir de manera involuntaria que las niñas tienen que hacer un esfuerzo extraordinario para compensar sus bajas habilidades.
+
+2. Enséñeles a valorar los errores
+Otro componente para fomentar una mentalidad de crecimiento es enmarcar el fracaso como una oportunidad de aprendizaje en lugar de algo que debe evitarse u ocultar de la vista de todos cuando sucede.
+
+Esto se logra centrándose en el proceso de aprendizaje – por ejemplo, descubrir de dónde provienen los errores y crear nuevas estrategias para la próxima vez. Cuando los niños vean cómo sus esfuerzos han sido fructíferos, es más probable que observen las habilidades para estudiar carreras STEM desde una perspectiva de crecimiento.
+
+
+Una alumna en Indiana, EEUU sostiene una foto de Mae Jemison, la primera astronauta afroamericana. Bob Gwaltney/AP
+3. Hábleles sobre mujeres exitosas
+Los estereotipos también pueden cuestionarse dándoles a las niñas ejemplos de mujeres que han tenido éxito en carreras STEM.
+
+Al describir a estas mujeres es clave decir que tienen algo en común con ellas; es importante destacar cómo se convirtieron en científicas, lo que ayudará a las niñas a visualizarse a sí mismas recorriendo un camino de éxito.
+
+4. Bríndeles oportunidades de éxito
+Otra estrategia es darles a las niñas oportunidades para que logren éxito en tareas relacionadas con carreras STEM para comenzar a construir su confianza.
+
+Por ejemplo, un maestro podría enmarcar una asignación de programación como un juego, lo que podría ayudar a las niñas a sentirse más motivadas y capaces del éxito.
+
+5. Combata falsos estereotipos sobre carreras STEM
+Cuando los niños se imaginan a sí mismos realizando trabajos diferentes en el futuro, podrían preguntarse si tienen algo en común con las personas que desempeñan esos trabajos. Un desajuste entre el concepto que tiene un niño y su impresión sobre los individuos de determinada esfera puede hacer que esta carrera no le parezca atractiva.
+
+Desafortunadamente, la forma en que los medios describen a las personas que estudiaron carreras STEM son a menudo estrechas y perpetúan falsos estereotipos, como que los científicos son excéntricos, “nerds” o “geeky” (obsesivos de las computadores y desvinculados de la realidad).
+
+Del mismo modo, el trabajo de los científicos se asume como solitario y aislante. También se considera que persiguen objetivos egocéntricos, como satisfacer su propia curiosidad, y que procurar el bien ajeno no está entre sus objetivos.
+
+Estas imágenes sociales actúan como una barrera para las niñas en particular: a las niñas se les educa para que se adapten a las necesidades comunes de determinado grupo social y se consideren a sí mismas diferentes del científico promedio y esto las lleva a inclinarse a esferas en las que se puedan encontrar a personas con las que se identifiquen con facilidad y que tienen objetivos más altruistas.
+
+Sin embargo, muchos científicos modernos no se ajustan a la imagen de “geeky,” excéntrico solitario, y tienen un gran sentido de la colaboración y el apoyo a otras personas.
+
+6. Presente ejemplos de personas que hicieron carreras STEM
+Para contrarrestar los efectos de estas imágenes, los padres y maestros pueden presentar a los niños ejemplos diversos y fáciles de identificar de personas que han seguido una carrera STEM. Pueden hacerlo online, como Así luce un científico y Skype a Scientist.
+
+Los padres y maestros también pueden decirles a los niños que los científicos a menudo trabajan en equipo e inventan cosas que ayudan a las personas en su vida cotidiana. Es probable que este tipo de mensajes ayude tanto a las niñas como a los niños porque revelan propósitos más profundos para aprender temas relacionados con carreras STEM.
+
+7. Cree un ambiente que promueva las ciencias
+Algunos han atribuido la baja representación de las mujeres en carreras STEM a sus preferencias inherentes. Sin embargo, la evidencia científica indica que estas preferencias están determinadas por conceptos culturales; y no por diferencias innatas.
+
+Los padres y educadores se encuentran en una excelente situación para ayudar a eliminar los estereotipos que desestimulan a las niñas a convertirse en científicas. Y creemos que una de las mejores maneras de hacerlo es concebir entornos que promuevan la idea de que las carreras científicas están a su alcance.
+
+This article was originally published in English
+
+igualdad de género
+The Conversation US en español
+mujeres
+niños
+matemáticas
+estudiantes
+Ciencias
+ Tweet Share Get newsletter
+Before you go...
+Journalists and researchers have one thing in common: we seek the truth. I work with academics and scientists every day to communicate knowledge, discovery, and facts to readers like you who also care about evidence over opinion. If you think this is important – and I’m confident you do – please help The Conversation grow with a gift in whatever amount you can afford. Thank you.
+
+
+Martin LaMonica
+Deputy EditorLas mujeres permanecen muy poco representadas en carreras de ciencias, tecnología, ingeniería y matemáticas, o STEM.
+
+En el campo de la ingeniería, por ejemplo, las mujeres en Estados Unidos obtuvieron menos del 20 por ciento de los doctorados en el 2014. En México, el 89% de investigadores de alto nivel en las universidades publicas son hombres.
+
+Tales brechas no son el resultado de diferencias en la capacidad intelectual. Las niñas actualmente conforman más de la mitad de la población estudiantil superdotada de EEUU, por ejemplo.
+
+Si las niñas tienen la inteligencia necesaria para tener éxito en carreras STEM, ¿qué factores explican por qué no se interesan en las carreras relacionadas con estos campos?
+
+Read more: Here's how to encourage more girls to pursue science and math careers
+
+Hay dos tipos de criterios que desalientan a las niñas a estudiar carreras STEM a temprana edad: a) estereotipos negativos sobre sus habilidades intelectuales; y b) estereotipos sobre las personas que trabajan en carreras STEM que son calificadas como “nerds.”
+
+Como investigadores que analizan cómo estereotipos y otros factores psicológicos podrían desviar a las niñas de estudiar carreras relacionadas con las matemáticas y las ciencias en general, creemos que los padres y los educadores pueden ayudar a cambiar las cosas y aminorar las diferencias de género en lo referente a carreras STEM.
+
+1. Enséñeles una mentalidad de crecimiento
+Ya desde el primer grado, las niñas tienen menos probabilidades que los niños de asociar su género con las habilidades intelectuales.
+
+Teniendo en cuenta cuán generalizados son estos estereotipos, ¿cómo pueden padres y profesores intervenir para proteger a las niñas de la suposición de que son menos capaces intelectualmente – por tanto, menos idóneas para estudiar carreras STEM – que los niños?
+
+Una posible estrategia es convencerlas a las niñas de que sus habilidades académicas pueden desarrollarse.
+
+Los estereotipos negativos se basan en la suposición de que las niñas carecen de la capacidad innata necesaria para el éxito. Al enfatizar en cómo las habilidades cambian y se desarrollan en la medida que pasa el tiempo desafiamos esta convicción.
+
+Al promover un concepto de crecimiento, es esencial transmitir el esfuerzo y la capacidad de crear estrategias, y que esta es una verdad para todos, no solo para las niñas.
+
+Por ejemplo, un maestro o padre podría decir: “Cualquier persona que quiera ser buena en matemáticas debe resolver muchos problemas, en especial, los más difíciles para entrenar su capacidad de aprendizaje”. A menos que se haga un esfuerzo para que esto sea normal para todos, padres y profesores podrían sugerir de manera involuntaria que las niñas tienen que hacer un esfuerzo extraordinario para compensar sus bajas habilidades.
+
+2. Enséñeles a valorar los errores
+Otro componente para fomentar una mentalidad de crecimiento es enmarcar el fracaso como una oportunidad de aprendizaje en lugar de algo que debe evitarse u ocultar de la vista de todos cuando sucede.
+
+Esto se logra centrándose en el proceso de aprendizaje – por ejemplo, descubrir de dónde provienen los errores y crear nuevas estrategias para la próxima vez. Cuando los niños vean cómo sus esfuerzos han sido fructíferos, es más probable que observen las habilidades para estudiar carreras STEM desde una perspectiva de crecimiento.
+
+
+Una alumna en Indiana, EEUU sostiene una foto de Mae Jemison, la primera astronauta afroamericana. Bob Gwaltney/AP
+3. Hábleles sobre mujeres exitosas
+Los estereotipos también pueden cuestionarse dándoles a las niñas ejemplos de mujeres que han tenido éxito en carreras STEM.
+
+Al describir a estas mujeres es clave decir que tienen algo en común con ellas; es importante destacar cómo se convirtieron en científicas, lo que ayudará a las niñas a visualizarse a sí mismas recorriendo un camino de éxito.
+
+4. Bríndeles oportunidades de éxito
+Otra estrategia es darles a las niñas oportunidades para que logren éxito en tareas relacionadas con carreras STEM para comenzar a construir su confianza.
+
+Por ejemplo, un maestro podría enmarcar una asignación de programación como un juego, lo que podría ayudar a las niñas a sentirse más motivadas y capaces del éxito.
+
+5. Combata falsos estereotipos sobre carreras STEM
+Cuando los niños se imaginan a sí mismos realizando trabajos diferentes en el futuro, podrían preguntarse si tienen algo en común con las personas que desempeñan esos trabajos. Un desajuste entre el concepto que tiene un niño y su impresión sobre los individuos de determinada esfera puede hacer que esta carrera no le parezca atractiva.
+
+Desafortunadamente, la forma en que los medios describen a las personas que estudiaron carreras STEM son a menudo estrechas y perpetúan falsos estereotipos, como que los científicos son excéntricos, “nerds” o “geeky” (obsesivos de las computadores y desvinculados de la realidad).
+
+Del mismo modo, el trabajo de los científicos se asume como solitario y aislante. También se considera que persiguen objetivos egocéntricos, como satisfacer su propia curiosidad, y que procurar el bien ajeno no está entre sus objetivos.
+
+Estas imágenes sociales actúan como una barrera para las niñas en particular: a las niñas se les educa para que se adapten a las necesidades comunes de determinado grupo social y se consideren a sí mismas diferentes del científico promedio y esto las lleva a inclinarse a esferas en las que se puedan encontrar a personas con las que se identifiquen con facilidad y que tienen objetivos más altruistas.
+
+Sin embargo, muchos científicos modernos no se ajustan a la imagen de “geeky,” excéntrico solitario, y tienen un gran sentido de la colaboración y el apoyo a otras personas.
+
+6. Presente ejemplos de personas que hicieron carreras STEM
+Para contrarrestar los efectos de estas imágenes, los padres y maestros pueden presentar a los niños ejemplos diversos y fáciles de identificar de personas que han seguido una carrera STEM. Pueden hacerlo online, como Así luce un científico y Skype a Scientist.
+
+Los padres y maestros también pueden decirles a los niños que los científicos a menudo trabajan en equipo e inventan cosas que ayudan a las personas en su vida cotidiana. Es probable que este tipo de mensajes ayude tanto a las niñas como a los niños porque revelan propósitos más profundos para aprender temas relacionados con carreras STEM.
+
+7. Cree un ambiente que promueva las ciencias
+Algunos han atribuido la baja representación de las mujeres en carreras STEM a sus preferencias inherentes. Sin embargo, la evidencia científica indica que estas preferencias están determinadas por conceptos culturales; y no por diferencias innatas.
+
+Los padres y educadores se encuentran en una excelente situación para ayudar a eliminar los estereotipos que desestimulan a las niñas a convertirse en científicas. Y creemos que una de las mejores maneras de hacerlo es concebir entornos que promuevan la idea de que las carreras científicas están a su alcance.
+
+This article was originally published in English
+
+igualdad de género
+The Conversation US en español
+mujeres
+niños
+matemáticas
+estudiantes
+Ciencias
+ Tweet Share Get newsletter
+Before you go...
+Journalists and researchers have one thing in common: we seek the truth. I work with academics and scientists every day to communicate knowledge, discovery, and facts to readers like you who also care about evidence over opinion. If you think this is important – and I’m confident you do – please help The Conversation grow with a gift in whatever amount you can afford. Thank you.
+
+
+Martin LaMonica
+Deputy EditorLas mujeres permanecen muy poco representadas en carreras de ciencias, tecnología, ingeniería y matemáticas, o STEM.
+
+En el campo de la ingeniería, por ejemplo, las mujeres en Estados Unidos obtuvieron menos del 20 por ciento de los doctorados en el 2014. En México, el 89% de investigadores de alto nivel en las universidades publicas son hombres.
+
+Tales brechas no son el resultado de diferencias en la capacidad intelectual. Las niñas actualmente conforman más de la mitad de la población estudiantil superdotada de EEUU, por ejemplo.
+
+Si las niñas tienen la inteligencia necesaria para tener éxito en carreras STEM, ¿qué factores explican por qué no se interesan en las carreras relacionadas con estos campos?
+
+Read more: Here's how to encourage more girls to pursue science and math careers
+
+Hay dos tipos de criterios que desalientan a las niñas a estudiar carreras STEM a temprana edad: a) estereotipos negativos sobre sus habilidades intelectuales; y b) estereotipos sobre las personas que trabajan en carreras STEM que son calificadas como “nerds.”
+
+Como investigadores que analizan cómo estereotipos y otros factores psicológicos podrían desviar a las niñas de estudiar carreras relacionadas con las matemáticas y las ciencias en general, creemos que los padres y los educadores pueden ayudar a cambiar las cosas y aminorar las diferencias de género en lo referente a carreras STEM.
+
+1. Enséñeles una mentalidad de crecimiento
+Ya desde el primer grado, las niñas tienen menos probabilidades que los niños de asociar su género con las habilidades intelectuales.
+
+Teniendo en cuenta cuán generalizados son estos estereotipos, ¿cómo pueden padres y profesores intervenir para proteger a las niñas de la suposición de que son menos capaces intelectualmente – por tanto, menos idóneas para estudiar carreras STEM – que los niños?
+
+Una posible estrategia es convencerlas a las niñas de que sus habilidades académicas pueden desarrollarse.
+
+Los estereotipos negativos se basan en la suposición de que las niñas carecen de la capacidad innata necesaria para el éxito. Al enfatizar en cómo las habilidades cambian y se desarrollan en la medida que pasa el tiempo desafiamos esta convicción.
+
+Al promover un concepto de crecimiento, es esencial transmitir el esfuerzo y la capacidad de crear estrategias, y que esta es una verdad para todos, no solo para las niñas.
+
+Por ejemplo, un maestro o padre podría decir: “Cualquier persona que quiera ser buena en matemáticas debe resolver muchos problemas, en especial, los más difíciles para entrenar su capacidad de aprendizaje”. A menos que se haga un esfuerzo para que esto sea normal para todos, padres y profesores podrían sugerir de manera involuntaria que las niñas tienen que hacer un esfuerzo extraordinario para compensar sus bajas habilidades.
+
+2. Enséñeles a valorar los errores
+Otro componente para fomentar una mentalidad de crecimiento es enmarcar el fracaso como una oportunidad de aprendizaje en lugar de algo que debe evitarse u ocultar de la vista de todos cuando sucede.
+
+Esto se logra centrándose en el proceso de aprendizaje – por ejemplo, descubrir de dónde provienen los errores y crear nuevas estrategias para la próxima vez. Cuando los niños vean cómo sus esfuerzos han sido fructíferos, es más probable que observen las habilidades para estudiar carreras STEM desde una perspectiva de crecimiento.
+
+
+Una alumna en Indiana, EEUU sostiene una foto de Mae Jemison, la primera astronauta afroamericana. Bob Gwaltney/AP
+3. Hábleles sobre mujeres exitosas
+Los estereotipos también pueden cuestionarse dándoles a las niñas ejemplos de mujeres que han tenido éxito en carreras STEM.
+
+Al describir a estas mujeres es clave decir que tienen algo en común con ellas; es importante destacar cómo se convirtieron en científicas, lo que ayudará a las niñas a visualizarse a sí mismas recorriendo un camino de éxito.
+
+4. Bríndeles oportunidades de éxito
+Otra estrategia es darles a las niñas oportunidades para que logren éxito en tareas relacionadas con carreras STEM para comenzar a construir su confianza.
+
+Por ejemplo, un maestro podría enmarcar una asignación de programación como un juego, lo que podría ayudar a las niñas a sentirse más motivadas y capaces del éxito.
+
+5. Combata falsos estereotipos sobre carreras STEM
+Cuando los niños se imaginan a sí mismos realizando trabajos diferentes en el futuro, podrían preguntarse si tienen algo en común con las personas que desempeñan esos trabajos. Un desajuste entre el concepto que tiene un niño y su impresión sobre los individuos de determinada esfera puede hacer que esta carrera no le parezca atractiva.
+
+Desafortunadamente, la forma en que los medios describen a las personas que estudiaron carreras STEM son a menudo estrechas y perpetúan falsos estereotipos, como que los científicos son excéntricos, “nerds” o “geeky” (obsesivos de las computadores y desvinculados de la realidad).
+
+Del mismo modo, el trabajo de los científicos se asume como solitario y aislante. También se considera que persiguen objetivos egocéntricos, como satisfacer su propia curiosidad, y que procurar el bien ajeno no está entre sus objetivos.
+
+Estas imágenes sociales actúan como una barrera para las niñas en particular: a las niñas se les educa para que se adapten a las necesidades comunes de determinado grupo social y se consideren a sí mismas diferentes del científico promedio y esto las lleva a inclinarse a esferas en las que se puedan encontrar a personas con las que se identifiquen con facilidad y que tienen objetivos más altruistas.
+
+Sin embargo, muchos científicos modernos no se ajustan a la imagen de “geeky,” excéntrico solitario, y tienen un gran sentido de la colaboración y el apoyo a otras personas.
+
+6. Presente ejemplos de personas que hicieron carreras STEM
+Para contrarrestar los efectos de estas imágenes, los padres y maestros pueden presentar a los niños ejemplos diversos y fáciles de identificar de personas que han seguido una carrera STEM. Pueden hacerlo online, como Así luce un científico y Skype a Scientist.
+
+Los padres y maestros también pueden decirles a los niños que los científicos a menudo trabajan en equipo e inventan cosas que ayudan a las personas en su vida cotidiana. Es probable que este tipo de mensajes ayude tanto a las niñas como a los niños porque revelan propósitos más profundos para aprender temas relacionados con carreras STEM.
+
+7. Cree un ambiente que promueva las ciencias
+Algunos han atribuido la baja representación de las mujeres en carreras STEM a sus preferencias inherentes. Sin embargo, la evidencia científica indica que estas preferencias están determinadas por conceptos culturales; y no por diferencias innatas.
+
+Los padres y educadores se encuentran en una excelente situación para ayudar a eliminar los estereotipos que desestimulan a las niñas a convertirse en científicas. Y creemos que una de las mejores maneras de hacerlo es concebir entornos que promuevan la idea de que las carreras científicas están a su alcance.
+
+This article was originally published in English
+
+igualdad de género
+The Conversation US en español
+mujeres
+niños
+matemáticas
+estudiantes
+Ciencias
+ Tweet Share Get newsletter
+Before you go...
+Journalists and researchers have one thing in common: we seek the truth. I work with academics and scientists every day to communicate knowledge, discovery, and facts to readers like you who also care about evidence over opinion. If you think this is important – and I’m confident you do – please help The Conversation grow with a gift in whatever amount you can afford. Thank you.
+
+
+Martin LaMonica
+Deputy EditorLas mujeres permanecen muy poco representadas en carreras de ciencias, tecnología, ingeniería y matemáticas, o STEM.
+
+En el campo de la ingeniería, por ejemplo, las mujeres en Estados Unidos obtuvieron menos del 20 por ciento de los doctorados en el 2014. En México, el 89% de investigadores de alto nivel en las universidades publicas son hombres.
+
+Tales brechas no son el resultado de diferencias en la capacidad intelectual. Las niñas actualmente conforman más de la mitad de la población estudiantil superdotada de EEUU, por ejemplo.
+
+Si las niñas tienen la inteligencia necesaria para tener éxito en carreras STEM, ¿qué factores explican por qué no se interesan en las carreras relacionadas con estos campos?
+
+Read more: Here's how to encourage more girls to pursue science and math careers
+
+Hay dos tipos de criterios que desalientan a las niñas a estudiar carreras STEM a temprana edad: a) estereotipos negativos sobre sus habilidades intelectuales; y b) estereotipos sobre las personas que trabajan en carreras STEM que son calificadas como “nerds.”
+
+Como investigadores que analizan cómo estereotipos y otros factores psicológicos podrían desviar a las niñas de estudiar carreras relacionadas con las matemáticas y las ciencias en general, creemos que los padres y los educadores pueden ayudar a cambiar las cosas y aminorar las diferencias de género en lo referente a carreras STEM.
+
+1. Enséñeles una mentalidad de crecimiento
+Ya desde el primer grado, las niñas tienen menos probabilidades que los niños de asociar su género con las habilidades intelectuales.
+
+Teniendo en cuenta cuán generalizados son estos estereotipos, ¿cómo pueden padres y profesores intervenir para proteger a las niñas de la suposición de que son menos capaces intelectualmente – por tanto, menos idóneas para estudiar carreras STEM – que los niños?
+
+Una posible estrategia es convencerlas a las niñas de que sus habilidades académicas pueden desarrollarse.
+
+Los estereotipos negativos se basan en la suposición de que las niñas carecen de la capacidad innata necesaria para el éxito. Al enfatizar en cómo las habilidades cambian y se desarrollan en la medida que pasa el tiempo desafiamos esta convicción.
+
+Al promover un concepto de crecimiento, es esencial transmitir el esfuerzo y la capacidad de crear estrategias, y que esta es una verdad para todos, no solo para las niñas.
+
+Por ejemplo, un maestro o padre podría decir: “Cualquier persona que quiera ser buena en matemáticas debe resolver muchos problemas, en especial, los más difíciles para entrenar su capacidad de aprendizaje”. A menos que se haga un esfuerzo para que esto sea normal para todos, padres y profesores podrían sugerir de manera involuntaria que las niñas tienen que hacer un esfuerzo extraordinario para compensar sus bajas habilidades.
+
+2. Enséñeles a valorar los errores
+Otro componente para fomentar una mentalidad de crecimiento es enmarcar el fracaso como una oportunidad de aprendizaje en lugar de algo que debe evitarse u ocultar de la vista de todos cuando sucede.
+
+Esto se logra centrándose en el proceso de aprendizaje – por ejemplo, descubrir de dónde provienen los errores y crear nuevas estrategias para la próxima vez. Cuando los niños vean cómo sus esfuerzos han sido fructíferos, es más probable que observen las habilidades para estudiar carreras STEM desde una perspectiva de crecimiento.
+
+
+Una alumna en Indiana, EEUU sostiene una foto de Mae Jemison, la primera astronauta afroamericana. Bob Gwaltney/AP
+3. Hábleles sobre mujeres exitosas
+Los estereotipos también pueden cuestionarse dándoles a las niñas ejemplos de mujeres que han tenido éxito en carreras STEM.
+
+Al describir a estas mujeres es clave decir que tienen algo en común con ellas; es importante destacar cómo se convirtieron en científicas, lo que ayudará a las niñas a visualizarse a sí mismas recorriendo un camino de éxito.
+
+4. Bríndeles oportunidades de éxito
+Otra estrategia es darles a las niñas oportunidades para que logren éxito en tareas relacionadas con carreras STEM para comenzar a construir su confianza.
+
+Por ejemplo, un maestro podría enmarcar una asignación de programación como un juego, lo que podría ayudar a las niñas a sentirse más motivadas y capaces del éxito.
+
+5. Combata falsos estereotipos sobre carreras STEM
+Cuando los niños se imaginan a sí mismos realizando trabajos diferentes en el futuro, podrían preguntarse si tienen algo en común con las personas que desempeñan esos trabajos. Un desajuste entre el concepto que tiene un niño y su impresión sobre los individuos de determinada esfera puede hacer que esta carrera no le parezca atractiva.
+
+Desafortunadamente, la forma en que los medios describen a las personas que estudiaron carreras STEM son a menudo estrechas y perpetúan falsos estereotipos, como que los científicos son excéntricos, “nerds” o “geeky” (obsesivos de las computadores y desvinculados de la realidad).
+
+Del mismo modo, el trabajo de los científicos se asume como solitario y aislante. También se considera que persiguen objetivos egocéntricos, como satisfacer su propia curiosidad, y que procurar el bien ajeno no está entre sus objetivos.
+
+Estas imágenes sociales actúan como una barrera para las niñas en particular: a las niñas se les educa para que se adapten a las necesidades comunes de determinado grupo social y se consideren a sí mismas diferentes del científico promedio y esto las lleva a inclinarse a esferas en las que se puedan encontrar a personas con las que se identifiquen con facilidad y que tienen objetivos más altruistas.
+
+Sin embargo, muchos científicos modernos no se ajustan a la imagen de “geeky,” excéntrico solitario, y tienen un gran sentido de la colaboración y el apoyo a otras personas.
+
+6. Presente ejemplos de personas que hicieron carreras STEM
+Para contrarrestar los efectos de estas imágenes, los padres y maestros pueden presentar a los niños ejemplos diversos y fáciles de identificar de personas que han seguido una carrera STEM. Pueden hacerlo online, como Así luce un científico y Skype a Scientist.
+
+Los padres y maestros también pueden decirles a los niños que los científicos a menudo trabajan en equipo e inventan cosas que ayudan a las personas en su vida cotidiana. Es probable que este tipo de mensajes ayude tanto a las niñas como a los niños porque revelan propósitos más profundos para aprender temas relacionados con carreras STEM.
+
+7. Cree un ambiente que promueva las ciencias
+Algunos han atribuido la baja representación de las mujeres en carreras STEM a sus preferencias inherentes. Sin embargo, la evidencia científica indica que estas preferencias están determinadas por conceptos culturales; y no por diferencias innatas.
+
+Los padres y educadores se encuentran en una excelente situación para ayudar a eliminar los estereotipos que desestimulan a las niñas a convertirse en científicas. Y creemos que una de las mejores maneras de hacerlo es concebir entornos que promuevan la idea de que las carreras científicas están a su alcance.
+
+This article was originally published in English
+
+igualdad de género
+The Conversation US en español
+mujeres
+niños
+matemáticas
+estudiantes
+Ciencias
+ Tweet Share Get newsletter
+Before you go...
+Journalists and researchers have one thing in common: we seek the truth. I work with academics and scientists every day to communicate knowledge, discovery, and facts to readers like you who also care about evidence over opinion. If you think this is important – and I’m confident you do – please help The Conversation grow with a gift in whatever amount you can afford. Thank you.
+
+
+Martin LaMonica
+Deputy EditorLas mujeres permanecen muy poco representadas en carreras de ciencias, tecnología, ingeniería y matemáticas, o STEM.
+
+En el campo de la ingeniería, por ejemplo, las mujeres en Estados Unidos obtuvieron menos del 20 por ciento de los doctorados en el 2014. En México, el 89% de investigadores de alto nivel en las universidades publicas son hombres.
+
+Tales brechas no son el resultado de diferencias en la capacidad intelectual. Las niñas actualmente conforman más de la mitad de la población estudiantil superdotada de EEUU, por ejemplo.
+
+Si las niñas tienen la inteligencia necesaria para tener éxito en carreras STEM, ¿qué factores explican por qué no se interesan en las carreras relacionadas con estos campos?
+
+Read more: Here's how to encourage more girls to pursue science and math careers
+
+Hay dos tipos de criterios que desalientan a las niñas a estudiar carreras STEM a temprana edad: a) estereotipos negativos sobre sus habilidades intelectuales; y b) estereotipos sobre las personas que trabajan en carreras STEM que son calificadas como “nerds.”
+
+Como investigadores que analizan cómo estereotipos y otros factores psicológicos podrían desviar a las niñas de estudiar carreras relacionadas con las matemáticas y las ciencias en general, creemos que los padres y los educadores pueden ayudar a cambiar las cosas y aminorar las diferencias de género en lo referente a carreras STEM.
+
+1. Enséñeles una mentalidad de crecimiento
+Ya desde el primer grado, las niñas tienen menos probabilidades que los niños de asociar su género con las habilidades intelectuales.
+
+Teniendo en cuenta cuán generalizados son estos estereotipos, ¿cómo pueden padres y profesores intervenir para proteger a las niñas de la suposición de que son menos capaces intelectualmente – por tanto, menos idóneas para estudiar carreras STEM – que los niños?
+
+Una posible estrategia es convencerlas a las niñas de que sus habilidades académicas pueden desarrollarse.
+
+Los estereotipos negativos se basan en la suposición de que las niñas carecen de la capacidad innata necesaria para el éxito. Al enfatizar en cómo las habilidades cambian y se desarrollan en la medida que pasa el tiempo desafiamos esta convicción.
+
+Al promover un concepto de crecimiento, es esencial transmitir el esfuerzo y la capacidad de crear estrategias, y que esta es una verdad para todos, no solo para las niñas.
+
+Por ejemplo, un maestro o padre podría decir: “Cualquier persona que quiera ser buena en matemáticas debe resolver muchos problemas, en especial, los más difíciles para entrenar su capacidad de aprendizaje”. A menos que se haga un esfuerzo para que esto sea normal para todos, padres y profesores podrían sugerir de manera involuntaria que las niñas tienen que hacer un esfuerzo extraordinario para compensar sus bajas habilidades.
+
+2. Enséñeles a valorar los errores
+Otro componente para fomentar una mentalidad de crecimiento es enmarcar el fracaso como una oportunidad de aprendizaje en lugar de algo que debe evitarse u ocultar de la vista de todos cuando sucede.
+
+Esto se logra centrándose en el proceso de aprendizaje – por ejemplo, descubrir de dónde provienen los errores y crear nuevas estrategias para la próxima vez. Cuando los niños vean cómo sus esfuerzos han sido fructíferos, es más probable que observen las habilidades para estudiar carreras STEM desde una perspectiva de crecimiento.
+
+
+Una alumna en Indiana, EEUU sostiene una foto de Mae Jemison, la primera astronauta afroamericana. Bob Gwaltney/AP
+3. Hábleles sobre mujeres exitosas
+Los estereotipos también pueden cuestionarse dándoles a las niñas ejemplos de mujeres que han tenido éxito en carreras STEM.
+
+Al describir a estas mujeres es clave decir que tienen algo en común con ellas; es importante destacar cómo se convirtieron en científicas, lo que ayudará a las niñas a visualizarse a sí mismas recorriendo un camino de éxito.
+
+4. Bríndeles oportunidades de éxito
+Otra estrategia es darles a las niñas oportunidades para que logren éxito en tareas relacionadas con carreras STEM para comenzar a construir su confianza.
+
+Por ejemplo, un maestro podría enmarcar una asignación de programación como un juego, lo que podría ayudar a las niñas a sentirse más motivadas y capaces del éxito.
+
+5. Combata falsos estereotipos sobre carreras STEM
+Cuando los niños se imaginan a sí mismos realizando trabajos diferentes en el futuro, podrían preguntarse si tienen algo en común con las personas que desempeñan esos trabajos. Un desajuste entre el concepto que tiene un niño y su impresión sobre los individuos de determinada esfera puede hacer que esta carrera no le parezca atractiva.
+
+Desafortunadamente, la forma en que los medios describen a las personas que estudiaron carreras STEM son a menudo estrechas y perpetúan falsos estereotipos, como que los científicos son excéntricos, “nerds” o “geeky” (obsesivos de las computadores y desvinculados de la realidad).
+
+Del mismo modo, el trabajo de los científicos se asume como solitario y aislante. También se considera que persiguen objetivos egocéntricos, como satisfacer su propia curiosidad, y que procurar el bien ajeno no está entre sus objetivos.
+
+Estas imágenes sociales actúan como una barrera para las niñas en particular: a las niñas se les educa para que se adapten a las necesidades comunes de determinado grupo social y se consideren a sí mismas diferentes del científico promedio y esto las lleva a inclinarse a esferas en las que se puedan encontrar a personas con las que se identifiquen con facilidad y que tienen objetivos más altruistas.
+
+Sin embargo, muchos científicos modernos no se ajustan a la imagen de “geeky,” excéntrico solitario, y tienen un gran sentido de la colaboración y el apoyo a otras personas.
+
+6. Presente ejemplos de personas que hicieron carreras STEM
+Para contrarrestar los efectos de estas imágenes, los padres y maestros pueden presentar a los niños ejemplos diversos y fáciles de identificar de personas que han seguido una carrera STEM. Pueden hacerlo online, como Así luce un científico y Skype a Scientist.
+
+Los padres y maestros también pueden decirles a los niños que los científicos a menudo trabajan en equipo e inventan cosas que ayudan a las personas en su vida cotidiana. Es probable que este tipo de mensajes ayude tanto a las niñas como a los niños porque revelan propósitos más profundos para aprender temas relacionados con carreras STEM.
+
+7. Cree un ambiente que promueva las ciencias
+Algunos han atribuido la baja representación de las mujeres en carreras STEM a sus preferencias inherentes. Sin embargo, la evidencia científica indica que estas preferencias están determinadas por conceptos culturales; y no por diferencias innatas.
+
+Los padres y educadores se encuentran en una excelente situación para ayudar a eliminar los estereotipos que desestimulan a las niñas a convertirse en científicas. Y creemos que una de las mejores maneras de hacerlo es concebir entornos que promuevan la idea de que las carreras científicas están a su alcance.
+
+This article was originally published in English
+
+igualdad de género
+The Conversation US en español
+mujeres
+niños
+matemáticas
+estudiantes
+Ciencias
+ Tweet Share Get newsletter
+Before you go...
+Journalists and researchers have one thing in common: we seek the truth. I work with academics and scientists every day to communicate knowledge, discovery, and facts to readers like you who also care about evidence over opinion. If you think this is important – and I’m confident you do – please help The Conversation grow with a gift in whatever amount you can afford. Thank you.
+
+
+Martin LaMonica
+Deputy EditorLas mujeres permanecen muy poco representadas en carreras de ciencias, tecnología, ingeniería y matemáticas, o STEM.
+
+En el campo de la ingeniería, por ejemplo, las mujeres en Estados Unidos obtuvieron menos del 20 por ciento de los doctorados en el 2014. En México, el 89% de investigadores de alto nivel en las universidades publicas son hombres.
+
+Tales brechas no son el resultado de diferencias en la capacidad intelectual. Las niñas actualmente conforman más de la mitad de la población estudiantil superdotada de EEUU, por ejemplo.
+
+Si las niñas tienen la inteligencia necesaria para tener éxito en carreras STEM, ¿qué factores explican por qué no se interesan en las carreras relacionadas con estos campos?
+
+Read more: Here's how to encourage more girls to pursue science and math careers
+
+Hay dos tipos de criterios que desalientan a las niñas a estudiar carreras STEM a temprana edad: a) estereotipos negativos sobre sus habilidades intelectuales; y b) estereotipos sobre las personas que trabajan en carreras STEM que son calificadas como “nerds.”
+
+Como investigadores que analizan cómo estereotipos y otros factores psicológicos podrían desviar a las niñas de estudiar carreras relacionadas con las matemáticas y las ciencias en general, creemos que los padres y los educadores pueden ayudar a cambiar las cosas y aminorar las diferencias de género en lo referente a carreras STEM.
+
+1. Enséñeles una mentalidad de crecimiento
+Ya desde el primer grado, las niñas tienen menos probabilidades que los niños de asociar su género con las habilidades intelectuales.
+
+Teniendo en cuenta cuán generalizados son estos estereotipos, ¿cómo pueden padres y profesores intervenir para proteger a las niñas de la suposición de que son menos capaces intelectualmente – por tanto, menos idóneas para estudiar carreras STEM – que los niños?
+
+Una posible estrategia es convencerlas a las niñas de que sus habilidades académicas pueden desarrollarse.
+
+Los estereotipos negativos se basan en la suposición de que las niñas carecen de la capacidad innata necesaria para el éxito. Al enfatizar en cómo las habilidades cambian y se desarrollan en la medida que pasa el tiempo desafiamos esta convicción.
+
+Al promover un concepto de crecimiento, es esencial transmitir el esfuerzo y la capacidad de crear estrategias, y que esta es una verdad para todos, no solo para las niñas.
+
+Por ejemplo, un maestro o padre podría decir: “Cualquier persona que quiera ser buena en matemáticas debe resolver muchos problemas, en especial, los más difíciles para entrenar su capacidad de aprendizaje”. A menos que se haga un esfuerzo para que esto sea normal para todos, padres y profesores podrían sugerir de manera involuntaria que las niñas tienen que hacer un esfuerzo extraordinario para compensar sus bajas habilidades.
+
+2. Enséñeles a valorar los errores
+Otro componente para fomentar una mentalidad de crecimiento es enmarcar el fracaso como una oportunidad de aprendizaje en lugar de algo que debe evitarse u ocultar de la vista de todos cuando sucede.
+
+Esto se logra centrándose en el proceso de aprendizaje – por ejemplo, descubrir de dónde provienen los errores y crear nuevas estrategias para la próxima vez. Cuando los niños vean cómo sus esfuerzos han sido fructíferos, es más probable que observen las habilidades para estudiar carreras STEM desde una perspectiva de crecimiento.
+
+
+Una alumna en Indiana, EEUU sostiene una foto de Mae Jemison, la primera astronauta afroamericana. Bob Gwaltney/AP
+3. Hábleles sobre mujeres exitosas
+Los estereotipos también pueden cuestionarse dándoles a las niñas ejemplos de mujeres que han tenido éxito en carreras STEM.
+
+Al describir a estas mujeres es clave decir que tienen algo en común con ellas; es importante destacar cómo se convirtieron en científicas, lo que ayudará a las niñas a visualizarse a sí mismas recorriendo un camino de éxito.
+
+4. Bríndeles oportunidades de éxito
+Otra estrategia es darles a las niñas oportunidades para que logren éxito en tareas relacionadas con carreras STEM para comenzar a construir su confianza.
+
+Por ejemplo, un maestro podría enmarcar una asignación de programación como un juego, lo que podría ayudar a las niñas a sentirse más motivadas y capaces del éxito.
+
+5. Combata falsos estereotipos sobre carreras STEM
+Cuando los niños se imaginan a sí mismos realizando trabajos diferentes en el futuro, podrían preguntarse si tienen algo en común con las personas que desempeñan esos trabajos. Un desajuste entre el concepto que tiene un niño y su impresión sobre los individuos de determinada esfera puede hacer que esta carrera no le parezca atractiva.
+
+Desafortunadamente, la forma en que los medios describen a las personas que estudiaron carreras STEM son a menudo estrechas y perpetúan falsos estereotipos, como que los científicos son excéntricos, “nerds” o “geeky” (obsesivos de las computadores y desvinculados de la realidad).
+
+Del mismo modo, el trabajo de los científicos se asume como solitario y aislante. También se considera que persiguen objetivos egocéntricos, como satisfacer su propia curiosidad, y que procurar el bien ajeno no está entre sus objetivos.
+
+Estas imágenes sociales actúan como una barrera para las niñas en particular: a las niñas se les educa para que se adapten a las necesidades comunes de determinado grupo social y se consideren a sí mismas diferentes del científico promedio y esto las lleva a inclinarse a esferas en las que se puedan encontrar a personas con las que se identifiquen con facilidad y que tienen objetivos más altruistas.
+
+Sin embargo, muchos científicos modernos no se ajustan a la imagen de “geeky,” excéntrico solitario, y tienen un gran sentido de la colaboración y el apoyo a otras personas.
+
+6. Presente ejemplos de personas que hicieron carreras STEM
+Para contrarrestar los efectos de estas imágenes, los padres y maestros pueden presentar a los niños ejemplos diversos y fáciles de identificar de personas que han seguido una carrera STEM. Pueden hacerlo online, como Así luce un científico y Skype a Scientist.
+
+Los padres y maestros también pueden decirles a los niños que los científicos a menudo trabajan en equipo e inventan cosas que ayudan a las personas en su vida cotidiana. Es probable que este tipo de mensajes ayude tanto a las niñas como a los niños porque revelan propósitos más profundos para aprender temas relacionados con carreras STEM.
+
+7. Cree un ambiente que promueva las ciencias
+Algunos han atribuido la baja representación de las mujeres en carreras STEM a sus preferencias inherentes. Sin embargo, la evidencia científica indica que estas preferencias están determinadas por conceptos culturales; y no por diferencias innatas.
+
+Los padres y educadores se encuentran en una excelente situación para ayudar a eliminar los estereotipos que desestimulan a las niñas a convertirse en científicas. Y creemos que una de las mejores maneras de hacerlo es concebir entornos que promuevan la idea de que las carreras científicas están a su alcance.
+
+This article was originally published in English
+
+igualdad de género
+The Conversation US en español
+mujeres
+niños
+matemáticas
+estudiantes
+Ciencias
+ Tweet Share Get newsletter
+Before you go...
+Journalists and researchers have one thing in common: we seek the truth. I work with academics and scientists every day to communicate knowledge, discovery, and facts to readers like you who also care about evidence over opinion. If you think this is important – and I’m confident you do – please help The Conversation grow with a gift in whatever amount you can afford. Thank you.
+
+
+Martin LaMonica
+Deputy EditorLas mujeres permanecen muy poco representadas en carreras de ciencias, tecnología, ingeniería y matemáticas, o STEM.
+
+En el campo de la ingeniería, por ejemplo, las mujeres en Estados Unidos obtuvieron menos del 20 por ciento de los doctorados en el 2014. En México, el 89% de investigadores de alto nivel en las universidades publicas son hombres.
+
+Tales brechas no son el resultado de diferencias en la capacidad intelectual. Las niñas actualmente conforman más de la mitad de la población estudiantil superdotada de EEUU, por ejemplo.
+
+Si las niñas tienen la inteligencia necesaria para tener éxito en carreras STEM, ¿qué factores explican por qué no se interesan en las carreras relacionadas con estos campos?
+
+Read more: Here's how to encourage more girls to pursue science and math careers
+
+Hay dos tipos de criterios que desalientan a las niñas a estudiar carreras STEM a temprana edad: a) estereotipos negativos sobre sus habilidades intelectuales; y b) estereotipos sobre las personas que trabajan en carreras STEM que son calificadas como “nerds.”
+
+Como investigadores que analizan cómo estereotipos y otros factores psicológicos podrían desviar a las niñas de estudiar carreras relacionadas con las matemáticas y las ciencias en general, creemos que los padres y los educadores pueden ayudar a cambiar las cosas y aminorar las diferencias de género en lo referente a carreras STEM.
+
+1. Enséñeles una mentalidad de crecimiento
+Ya desde el primer grado, las niñas tienen menos probabilidades que los niños de asociar su género con las habilidades intelectuales.
+
+Teniendo en cuenta cuán generalizados son estos estereotipos, ¿cómo pueden padres y profesores intervenir para proteger a las niñas de la suposición de que son menos capaces intelectualmente – por tanto, menos idóneas para estudiar carreras STEM – que los niños?
+
+Una posible estrategia es convencerlas a las niñas de que sus habilidades académicas pueden desarrollarse.
+
+Los estereotipos negativos se basan en la suposición de que las niñas carecen de la capacidad innata necesaria para el éxito. Al enfatizar en cómo las habilidades cambian y se desarrollan en la medida que pasa el tiempo desafiamos esta convicción.
+
+Al promover un concepto de crecimiento, es esencial transmitir el esfuerzo y la capacidad de crear estrategias, y que esta es una verdad para todos, no solo para las niñas.
+
+Por ejemplo, un maestro o padre podría decir: “Cualquier persona que quiera ser buena en matemáticas debe resolver muchos problemas, en especial, los más difíciles para entrenar su capacidad de aprendizaje”. A menos que se haga un esfuerzo para que esto sea normal para todos, padres y profesores podrían sugerir de manera involuntaria que las niñas tienen que hacer un esfuerzo extraordinario para compensar sus bajas habilidades.
+
+2. Enséñeles a valorar los errores
+Otro componente para fomentar una mentalidad de crecimiento es enmarcar el fracaso como una oportunidad de aprendizaje en lugar de algo que debe evitarse u ocultar de la vista de todos cuando sucede.
+
+Esto se logra centrándose en el proceso de aprendizaje – por ejemplo, descubrir de dónde provienen los errores y crear nuevas estrategias para la próxima vez. Cuando los niños vean cómo sus esfuerzos han sido fructíferos, es más probable que observen las habilidades para estudiar carreras STEM desde una perspectiva de crecimiento.
+
+
+Una alumna en Indiana, EEUU sostiene una foto de Mae Jemison, la primera astronauta afroamericana. Bob Gwaltney/AP
+3. Hábleles sobre mujeres exitosas
+Los estereotipos también pueden cuestionarse dándoles a las niñas ejemplos de mujeres que han tenido éxito en carreras STEM.
+
+Al describir a estas mujeres es clave decir que tienen algo en común con ellas; es importante destacar cómo se convirtieron en científicas, lo que ayudará a las niñas a visualizarse a sí mismas recorriendo un camino de éxito.
+
+4. Bríndeles oportunidades de éxito
+Otra estrategia es darles a las niñas oportunidades para que logren éxito en tareas relacionadas con carreras STEM para comenzar a construir su confianza.
+
+Por ejemplo, un maestro podría enmarcar una asignación de programación como un juego, lo que podría ayudar a las niñas a sentirse más motivadas y capaces del éxito.
+
+5. Combata falsos estereotipos sobre carreras STEM
+Cuando los niños se imaginan a sí mismos realizando trabajos diferentes en el futuro, podrían preguntarse si tienen algo en común con las personas que desempeñan esos trabajos. Un desajuste entre el concepto que tiene un niño y su impresión sobre los individuos de determinada esfera puede hacer que esta carrera no le parezca atractiva.
+
+Desafortunadamente, la forma en que los medios describen a las personas que estudiaron carreras STEM son a menudo estrechas y perpetúan falsos estereotipos, como que los científicos son excéntricos, “nerds” o “geeky” (obsesivos de las computadores y desvinculados de la realidad).
+
+Del mismo modo, el trabajo de los científicos se asume como solitario y aislante. También se considera que persiguen objetivos egocéntricos, como satisfacer su propia curiosidad, y que procurar el bien ajeno no está entre sus objetivos.
+
+Estas imágenes sociales actúan como una barrera para las niñas en particular: a las niñas se les educa para que se adapten a las necesidades comunes de determinado grupo social y se consideren a sí mismas diferentes del científico promedio y esto las lleva a inclinarse a esferas en las que se puedan encontrar a personas con las que se identifiquen con facilidad y que tienen objetivos más altruistas.
+
+Sin embargo, muchos científicos modernos no se ajustan a la imagen de “geeky,” excéntrico solitario, y tienen un gran sentido de la colaboración y el apoyo a otras personas.
+
+6. Presente ejemplos de personas que hicieron carreras STEM
+Para contrarrestar los efectos de estas imágenes, los padres y maestros pueden presentar a los niños ejemplos diversos y fáciles de identificar de personas que han seguido una carrera STEM. Pueden hacerlo online, como Así luce un científico y Skype a Scientist.
+
+Los padres y maestros también pueden decirles a los niños que los científicos a menudo trabajan en equipo e inventan cosas que ayudan a las personas en su vida cotidiana. Es probable que este tipo de mensajes ayude tanto a las niñas como a los niños porque revelan propósitos más profundos para aprender temas relacionados con carreras STEM.
+
+7. Cree un ambiente que promueva las ciencias
+Algunos han atribuido la baja representación de las mujeres en carreras STEM a sus preferencias inherentes. Sin embargo, la evidencia científica indica que estas preferencias están determinadas por conceptos culturales; y no por diferencias innatas.
+
+Los padres y educadores se encuentran en una excelente situación para ayudar a eliminar los estereotipos que desestimulan a las niñas a convertirse en científicas. Y creemos que una de las mejores maneras de hacerlo es concebir entornos que promuevan la idea de que las carreras científicas están a su alcance.
+
+This article was originally published in English
+
+igualdad de género
+The Conversation US en español
+mujeres
+niños
+matemáticas
+estudiantes
+Ciencias
+ Tweet Share Get newsletter
+Before you go...
+Journalists and researchers have one thing in common: we seek the truth. I work with academics and scientists every day to communicate knowledge, discovery, and facts to readers like you who also care about evidence over opinion. If you think this is important – and I’m confident you do – please help The Conversation grow with a gift in whatever amount you can afford. Thank you.
+
+
+Martin LaMonica
+Deputy EditorLas mujeres permanecen muy poco representadas en carreras de ciencias, tecnología, ingeniería y matemáticas, o STEM.
+
+En el campo de la ingeniería, por ejemplo, las mujeres en Estados Unidos obtuvieron menos del 20 por ciento de los doctorados en el 2014. En México, el 89% de investigadores de alto nivel en las universidades publicas son hombres.
+
+Tales brechas no son el resultado de diferencias en la capacidad intelectual. Las niñas actualmente conforman más de la mitad de la población estudiantil superdotada de EEUU, por ejemplo.
+
+Si las niñas tienen la inteligencia necesaria para tener éxito en carreras STEM, ¿qué factores explican por qué no se interesan en las carreras relacionadas con estos campos?
+
+Read more: Here's how to encourage more girls to pursue science and math careers
+
+Hay dos tipos de criterios que desalientan a las niñas a estudiar carreras STEM a temprana edad: a) estereotipos negativos sobre sus habilidades intelectuales; y b) estereotipos sobre las personas que trabajan en carreras STEM que son calificadas como “nerds.”
+
+Como investigadores que analizan cómo estereotipos y otros factores psicológicos podrían desviar a las niñas de estudiar carreras relacionadas con las matemáticas y las ciencias en general, creemos que los padres y los educadores pueden ayudar a cambiar las cosas y aminorar las diferencias de género en lo referente a carreras STEM.
+
+1. Enséñeles una mentalidad de crecimiento
+Ya desde el primer grado, las niñas tienen menos probabilidades que los niños de asociar su género con las habilidades intelectuales.
+
+Teniendo en cuenta cuán generalizados son estos estereotipos, ¿cómo pueden padres y profesores intervenir para proteger a las niñas de la suposición de que son menos capaces intelectualmente – por tanto, menos idóneas para estudiar carreras STEM – que los niños?
+
+Una posible estrategia es convencerlas a las niñas de que sus habilidades académicas pueden desarrollarse.
+
+Los estereotipos negativos se basan en la suposición de que las niñas carecen de la capacidad innata necesaria para el éxito. Al enfatizar en cómo las habilidades cambian y se desarrollan en la medida que pasa el tiempo desafiamos esta convicción.
+
+Al promover un concepto de crecimiento, es esencial transmitir el esfuerzo y la capacidad de crear estrategias, y que esta es una verdad para todos, no solo para las niñas.
+
+Por ejemplo, un maestro o padre podría decir: “Cualquier persona que quiera ser buena en matemáticas debe resolver muchos problemas, en especial, los más difíciles para entrenar su capacidad de aprendizaje”. A menos que se haga un esfuerzo para que esto sea normal para todos, padres y profesores podrían sugerir de manera involuntaria que las niñas tienen que hacer un esfuerzo extraordinario para compensar sus bajas habilidades.
+
+2. Enséñeles a valorar los errores
+Otro componente para fomentar una mentalidad de crecimiento es enmarcar el fracaso como una oportunidad de aprendizaje en lugar de algo que debe evitarse u ocultar de la vista de todos cuando sucede.
+
+Esto se logra centrándose en el proceso de aprendizaje – por ejemplo, descubrir de dónde provienen los errores y crear nuevas estrategias para la próxima vez. Cuando los niños vean cómo sus esfuerzos han sido fructíferos, es más probable que observen las habilidades para estudiar carreras STEM desde una perspectiva de crecimiento.
+
+
+Una alumna en Indiana, EEUU sostiene una foto de Mae Jemison, la primera astronauta afroamericana. Bob Gwaltney/AP
+3. Hábleles sobre mujeres exitosas
+Los estereotipos también pueden cuestionarse dándoles a las niñas ejemplos de mujeres que han tenido éxito en carreras STEM.
+
+Al describir a estas mujeres es clave decir que tienen algo en común con ellas; es importante destacar cómo se convirtieron en científicas, lo que ayudará a las niñas a visualizarse a sí mismas recorriendo un camino de éxito.
+
+4. Bríndeles oportunidades de éxito
+Otra estrategia es darles a las niñas oportunidades para que logren éxito en tareas relacionadas con carreras STEM para comenzar a construir su confianza.
+
+Por ejemplo, un maestro podría enmarcar una asignación de programación como un juego, lo que podría ayudar a las niñas a sentirse más motivadas y capaces del éxito.
+
+5. Combata falsos estereotipos sobre carreras STEM
+Cuando los niños se imaginan a sí mismos realizando trabajos diferentes en el futuro, podrían preguntarse si tienen algo en común con las personas que desempeñan esos trabajos. Un desajuste entre el concepto que tiene un niño y su impresión sobre los individuos de determinada esfera puede hacer que esta carrera no le parezca atractiva.
+
+Desafortunadamente, la forma en que los medios describen a las personas que estudiaron carreras STEM son a menudo estrechas y perpetúan falsos estereotipos, como que los científicos son excéntricos, “nerds” o “geeky” (obsesivos de las computadores y desvinculados de la realidad).
+
+Del mismo modo, el trabajo de los científicos se asume como solitario y aislante. También se considera que persiguen objetivos egocéntricos, como satisfacer su propia curiosidad, y que procurar el bien ajeno no está entre sus objetivos.
+
+Estas imágenes sociales actúan como una barrera para las niñas en particular: a las niñas se les educa para que se adapten a las necesidades comunes de determinado grupo social y se consideren a sí mismas diferentes del científico promedio y esto las lleva a inclinarse a esferas en las que se puedan encontrar a personas con las que se identifiquen con facilidad y que tienen objetivos más altruistas.
+
+Sin embargo, muchos científicos modernos no se ajustan a la imagen de “geeky,” excéntrico solitario, y tienen un gran sentido de la colaboración y el apoyo a otras personas.
+
+6. Presente ejemplos de personas que hicieron carreras STEM
+Para contrarrestar los efectos de estas imágenes, los padres y maestros pueden presentar a los niños ejemplos diversos y fáciles de identificar de personas que han seguido una carrera STEM. Pueden hacerlo online, como Así luce un científico y Skype a Scientist.
+
+Los padres y maestros también pueden decirles a los niños que los científicos a menudo trabajan en equipo e inventan cosas que ayudan a las personas en su vida cotidiana. Es probable que este tipo de mensajes ayude tanto a las niñas como a los niños porque revelan propósitos más profundos para aprender temas relacionados con carreras STEM.
+
+7. Cree un ambiente que promueva las ciencias
+Algunos han atribuido la baja representación de las mujeres en carreras STEM a sus preferencias inherentes. Sin embargo, la evidencia científica indica que estas preferencias están determinadas por conceptos culturales; y no por diferencias innatas.
+
+Los padres y educadores se encuentran en una excelente situación para ayudar a eliminar los estereotipos que desestimulan a las niñas a convertirse en científicas. Y creemos que una de las mejores maneras de hacerlo es concebir entornos que promuevan la idea de que las carreras científicas están a su alcance.
+
+This article was originally published in English
+
+igualdad de género
+The Conversation US en español
+mujeres
+niños
+matemáticas
+estudiantes
+Ciencias
+ Tweet Share Get newsletter
+Before you go...
+Journalists and researchers have one thing in common: we seek the truth. I work with academics and scientists every day to communicate knowledge, discovery, and facts to readers like you who also care about evidence over opinion. If you think this is important – and I’m confident you do – please help The Conversation grow with a gift in whatever amount you can afford. Thank you.
+
+
+Martin LaMonica
+Deputy EditorLas mujeres permanecen muy poco representadas en carreras de ciencias, tecnología, ingeniería y matemáticas, o STEM.
+
+En el campo de la ingeniería, por ejemplo, las mujeres en Estados Unidos obtuvieron menos del 20 por ciento de los doctorados en el 2014. En México, el 89% de investigadores de alto nivel en las universidades publicas son hombres.
+
+Tales brechas no son el resultado de diferencias en la capacidad intelectual. Las niñas actualmente conforman más de la mitad de la población estudiantil superdotada de EEUU, por ejemplo.
+
+Si las niñas tienen la inteligencia necesaria para tener éxito en carreras STEM, ¿qué factores explican por qué no se interesan en las carreras relacionadas con estos campos?
+
+Read more: Here's how to encourage more girls to pursue science and math careers
+
+Hay dos tipos de criterios que desalientan a las niñas a estudiar carreras STEM a temprana edad: a) estereotipos negativos sobre sus habilidades intelectuales; y b) estereotipos sobre las personas que trabajan en carreras STEM que son calificadas como “nerds.”
+
+Como investigadores que analizan cómo estereotipos y otros factores psicológicos podrían desviar a las niñas de estudiar carreras relacionadas con las matemáticas y las ciencias en general, creemos que los padres y los educadores pueden ayudar a cambiar las cosas y aminorar las diferencias de género en lo referente a carreras STEM.
+
+1. Enséñeles una mentalidad de crecimiento
+Ya desde el primer grado, las niñas tienen menos probabilidades que los niños de asociar su género con las habilidades intelectuales.
+
+Teniendo en cuenta cuán generalizados son estos estereotipos, ¿cómo pueden padres y profesores intervenir para proteger a las niñas de la suposición de que son menos capaces intelectualmente – por tanto, menos idóneas para estudiar carreras STEM – que los niños?
+
+Una posible estrategia es convencerlas a las niñas de que sus habilidades académicas pueden desarrollarse.
+
+Los estereotipos negativos se basan en la suposición de que las niñas carecen de la capacidad innata necesaria para el éxito. Al enfatizar en cómo las habilidades cambian y se desarrollan en la medida que pasa el tiempo desafiamos esta convicción.
+
+Al promover un concepto de crecimiento, es esencial transmitir el esfuerzo y la capacidad de crear estrategias, y que esta es una verdad para todos, no solo para las niñas.
+
+Por ejemplo, un maestro o padre podría decir: “Cualquier persona que quiera ser buena en matemáticas debe resolver muchos problemas, en especial, los más difíciles para entrenar su capacidad de aprendizaje”. A menos que se haga un esfuerzo para que esto sea normal para todos, padres y profesores podrían sugerir de manera involuntaria que las niñas tienen que hacer un esfuerzo extraordinario para compensar sus bajas habilidades.
+
+2. Enséñeles a valorar los errores
+Otro componente para fomentar una mentalidad de crecimiento es enmarcar el fracaso como una oportunidad de aprendizaje en lugar de algo que debe evitarse u ocultar de la vista de todos cuando sucede.
+
+Esto se logra centrándose en el proceso de aprendizaje – por ejemplo, descubrir de dónde provienen los errores y crear nuevas estrategias para la próxima vez. Cuando los niños vean cómo sus esfuerzos han sido fructíferos, es más probable que observen las habilidades para estudiar carreras STEM desde una perspectiva de crecimiento.
+
+
+Una alumna en Indiana, EEUU sostiene una foto de Mae Jemison, la primera astronauta afroamericana. Bob Gwaltney/AP
+3. Hábleles sobre mujeres exitosas
+Los estereotipos también pueden cuestionarse dándoles a las niñas ejemplos de mujeres que han tenido éxito en carreras STEM.
+
+Al describir a estas mujeres es clave decir que tienen algo en común con ellas; es importante destacar cómo se convirtieron en científicas, lo que ayudará a las niñas a visualizarse a sí mismas recorriendo un camino de éxito.
+
+4. Bríndeles oportunidades de éxito
+Otra estrategia es darles a las niñas oportunidades para que logren éxito en tareas relacionadas con carreras STEM para comenzar a construir su confianza.
+
+Por ejemplo, un maestro podría enmarcar una asignación de programación como un juego, lo que podría ayudar a las niñas a sentirse más motivadas y capaces del éxito.
+
+5. Combata falsos estereotipos sobre carreras STEM
+Cuando los niños se imaginan a sí mismos realizando trabajos diferentes en el futuro, podrían preguntarse si tienen algo en común con las personas que desempeñan esos trabajos. Un desajuste entre el concepto que tiene un niño y su impresión sobre los individuos de determinada esfera puede hacer que esta carrera no le parezca atractiva.
+
+Desafortunadamente, la forma en que los medios describen a las personas que estudiaron carreras STEM son a menudo estrechas y perpetúan falsos estereotipos, como que los científicos son excéntricos, “nerds” o “geeky” (obsesivos de las computadores y desvinculados de la realidad).
+
+Del mismo modo, el trabajo de los científicos se asume como solitario y aislante. También se considera que persiguen objetivos egocéntricos, como satisfacer su propia curiosidad, y que procurar el bien ajeno no está entre sus objetivos.
+
+Estas imágenes sociales actúan como una barrera para las niñas en particular: a las niñas se les educa para que se adapten a las necesidades comunes de determinado grupo social y se consideren a sí mismas diferentes del científico promedio y esto las lleva a inclinarse a esferas en las que se puedan encontrar a personas con las que se identifiquen con facilidad y que tienen objetivos más altruistas.
+
+Sin embargo, muchos científicos modernos no se ajustan a la imagen de “geeky,” excéntrico solitario, y tienen un gran sentido de la colaboración y el apoyo a otras personas.
+
+6. Presente ejemplos de personas que hicieron carreras STEM
+Para contrarrestar los efectos de estas imágenes, los padres y maestros pueden presentar a los niños ejemplos diversos y fáciles de identificar de personas que han seguido una carrera STEM. Pueden hacerlo online, como Así luce un científico y Skype a Scientist.
+
+Los padres y maestros también pueden decirles a los niños que los científicos a menudo trabajan en equipo e inventan cosas que ayudan a las personas en su vida cotidiana. Es probable que este tipo de mensajes ayude tanto a las niñas como a los niños porque revelan propósitos más profundos para aprender temas relacionados con carreras STEM.
+
+7. Cree un ambiente que promueva las ciencias
+Algunos han atribuido la baja representación de las mujeres en carreras STEM a sus preferencias inherentes. Sin embargo, la evidencia científica indica que estas preferencias están determinadas por conceptos culturales; y no por diferencias innatas.
+
+Los padres y educadores se encuentran en una excelente situación para ayudar a eliminar los estereotipos que desestimulan a las niñas a convertirse en científicas. Y creemos que una de las mejores maneras de hacerlo es concebir entornos que promuevan la idea de que las carreras científicas están a su alcance.
+
+This article was originally published in English
+
+igualdad de género
+The Conversation US en español
+mujeres
+niños
+matemáticas
+estudiantes
+Ciencias
+ Tweet Share Get newsletter
+Before you go...
+Journalists and researchers have one thing in common: we seek the truth. I work with academics and scientists every day to communicate knowledge, discovery, and facts to readers like you who also care about evidence over opinion. If you think this is important – and I’m confident you do – please help The Conversation grow with a gift in whatever amount you can afford. Thank you.
+
+
+Martin LaMonica
+Deputy Editor
