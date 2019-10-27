@@ -11,6 +11,9 @@ public class Nodo {
 	public Nodo() {
 		
 	}
+	public Nodo(Dato dato) {
+		this.dato=dato;
+	}
 
 	public Nodo getNodoIzq() {
 		return nodoIzq;

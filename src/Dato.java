@@ -11,7 +11,7 @@ public class Dato {
 		this.caracter=c;
 		this.frecuencia++;
 	}
-
+	
 	protected void aumentarFrecuencia() {
 		this.frecuencia++;
 	}
