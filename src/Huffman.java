@@ -43,18 +43,20 @@ public class Huffman {
 	}
 
 	public void crearArbol() {
+		ArrayList<Nodo> arbolAux= new ArrayList<Nodo>();
 		while (arbol.size() > 1) {
 			int menor1;
 			int menor2;
 			int indice1 = 0;
 			int indice2 = 0;
 			int i = 0;
+			
 
 			Nodo primero = arbol.get(i);
 			menor1 = primero.getDato().getFrecuencia();
 			while (i < arbol.size()) {
 				int frec = arbol.get(i).getDato().getFrecuencia();
-				if (frec < menor1) {
+				if (frec < menor1 ) {
 					primero = arbol.get(i);
 					indice1 = i;
 					menor1 = frec;
@@ -76,25 +78,73 @@ public class Huffman {
 			}
 			arbol.remove(indice2);
 
-
 			Nodo nuevo = new Nodo();
 			Dato dat = new Dato();
 			primero.setNodoPadre(nuevo);
 			primero.setBit(0);
+			arbolAux.add(primero);
+			
 			segundo.setNodoPadre(nuevo);
 			segundo.setBit(1);
+			arbolAux.add(segundo);
+			
 			dat.setFrecuencia(primero.getDato().getFrecuencia() + segundo.getDato().getFrecuencia());
-		//	System.out.println("frec: "+primero.getDato().getFrecuencia()+" + " + segundo.getDato().getFrecuencia() + " : "+(primero.getDato().getFrecuencia() + segundo.getDato().getFrecuencia()));
+	//		System.out.println("frec: "+primero.getDato().getFrecuencia()+" + " + segundo.getDato().getFrecuencia() + " : "+(primero.getDato().getFrecuencia() + segundo.getDato().getFrecuencia()));
 			nuevo.setDato(dat);
 			nuevo.setNodoIzq(primero);
 			nuevo.setNodoDer(segundo);
 			arbol.add(nuevo);
-		//	mostrarArbol();
+	//		mostrarArbol();
 			i=0;
 
 		}
+		
+		arbolAux.add(arbol.get(0));
+		arbol=arbolAux;
 
 	}
+	
+	
+	public String codificar(char c) {
+		
+		String cadena="";
+		for (Nodo nodo : arbol) {
+			
+			if(nodo.getDato().getCaracter()==c) {
+				cadena=cadena.concat(armarCadenaDeBits(nodo));
+				return cadena;
+			}
+			
+			
+		}
+
+		return "nope"; 
+	}
+	
+	
+	private String armarCadenaDeBits(Nodo nodo) {
+		
+		String cadena="";
+		
+		
+		while(nodo.getNodoPadre()!=null) {
+			cadena=cadena + nodo.getBit();
+			nodo=nodo.getNodoPadre();
+		}
+		return cadena+nodo.getBit();
+		
+		
+		
+		
+		
+		
+		
+		}
+	
+	
+	
+	
+	
 
 	public void prepararArbol() {
 		for (Dato dato : alfabeto)
@@ -113,8 +163,8 @@ public class Huffman {
 		prepararArbol();
 		
 		crearArbol();
-		System.out.println(arbol.get(0).getDato().getFrecuencia());
-		System.out.println(arbol.size());
+//		System.out.println(arbol.get(0).getDato().getFrecuencia());
+//		System.out.println(arbol.size());
 		fr.close();
 
 		return 0;

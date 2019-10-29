@@ -7,6 +7,7 @@ public class Nodo {
 	private Nodo nodoPadre=null;
 	private Dato dato;
 	private int bit;
+	private boolean procesado=false;
 	
 	public Nodo() {
 		
@@ -15,6 +16,15 @@ public class Nodo {
 		this.dato=dato;
 	}
 
+	
+	public void setProcesado(boolean procesado) {
+		this.procesado= procesado;
+	}
+	
+	public boolean isProcesado() {
+		return this.procesado;
+	}
+	
 	public Nodo getNodoIzq() {
 		return nodoIzq;
 	}

@@ -17,8 +17,9 @@ public class main {
 	
 		Huffman huff= new Huffman(new File("huffman.txt"));
 		huff.comprimir();
+
 		huff.mostrarAlfabeto();
-	
+		System.out.println(huff.codificar('e'));
 	
 	
 	}
