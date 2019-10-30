@@ -1,1 +1,44 @@
-tres tristes tigres comen trigo en un triga
+Historia
+Los programas de desfragmentación han formado parte de la optimización de disco desde que esta se estableció en 1975. Pocos, excepto Symantec y Microsoft, han distribuido programas de desfragmentación por separado de métodos de optimización de disco pico.
+
+Los sistemas MS-DOS antiguos, hasta la versión 5.0 incluida, y Windows NT hasta la versión 4.0 no incluían utilidades de desfragmentación.
+
+La inclusión gratuita de Defrag, con licencia de Symantec, en MS-DOS versión 6 redujo el uso de productos comerciales alternativos porque suponían un gasto adicional innecesario para los clientes potenciales. El disco es de forma de pico o también circular
+
+Windows 9x y ME
+Windows 95, Windows 98 y Windows Me incluyen también un desfragmentador. Puede ser invocado de forma programada mediante el asistente de mantenimiento y acepta opciones de línea de comandos.1​ Su mayor limitación es que, si el contenido de la unidad cambia durante la desfragmentación, el proceso se reinicia desde el principio (por razones de seguridad).2​
+
+Versiones modernas
+Windows 2000 y versiones posteriores de Windows incluyen una versión de licencia limitada de Diskeeper producido por Diskeeper Corporation (antes Executive Software). Windows XP, además, incluye un Defrag.exe de línea de comandos.3​
+
+Las técnicas utilizadas por el desfragmentador son los siguientes:4​
+
+Mover todos los índices o información del directorio a un solo lugar. Trasladar este lugar al centro de los datos, es decir, a un tercio espacio del total, por lo que el promedio de traslado del cabezal en busca de datos se reduce a la mitad en comparación con tener la información de directorio en la parte delantera.
+Mover los archivos poco usados lejos del área de directorio.
+Admitir que el usuario indique qué archivos ignorar, y en cuáles hacer hincapié.
+Hacer archivos contiguos para que puedan leerse sin búsquedas innecesarias.
+Cambios en Windows Vista
+En Windows Vista, el desfragmentador incluye una opción para ejecutarse automáticamente mediante el Programador de Windows y utiliza el recientemente incorporado algoritmo de baja prioridad a fin de que pueda seguir defragmentando empleando menos recursos (menos actividad de CPU para lectura/escritura de disco) cuando el ordenador está en uso. La interfaz de usuario se ha simplificado, eliminando totalmente el gráfico de colores y el indicador de progreso. Tampoco es posible seleccionar las unidades que defragmentar, aunque Windows Vista Service Pack 1 agrega esta característica.
+
+Si los fragmentos de un archivo tienen más de 64 MB de tamaño, el archivo no es desfragmentado si se usa la versión GUI. Microsoft ha declarado que esto se debe a que no hay beneficio discernible para el rendimiento puesto que el tiempo de búsqueda de esos grandes trozos de datos es insignificante en comparación con el tiempo necesario para leerlos. El resultado, sin embargo, es que el desfragmentador no requiere una cierta cantidad de espacio libre a fin de desfragmentar con éxito un volumen, a diferencia de la operación de desfragmentación completa, que requiere al menos el 15% de espacio libre en el volumen. La utilidad de línea de comandos, Defrag.exe en Windows Vista, ofrece más control sobre el proceso de desfragmentación, como realizar una desfragmentación completa mediante la consolidación de todos los fragmentos de archivo independientemente de su tamaño.5​ Además, Defrag.exe no requiere derechos de administrador. Esta utilidad se puede utilizar para desfragmentar volúmenes específicos o simplemente para analizar los volúmenes como el desfragmentador de Windows XP.
+
+El Desfragmentador de disco es mantenido por el equipo "Microsoft's Core File Services" (CFS). En el Service Pack 1 de Windows Vista se ha actualizado la versión para Vista de manera que incluya las mejoras desarrolladas en Windows Server 2008. De estas mejoras, la más notable es la habilidad para seleccionar qué volúmenes deben ser defragmentados, que se ha añadido de nuevo.
+
+Actualmente, desde Windows 8 (Consumer Preview) en adelante el desfragmentador de Windows tiene soporte SSD y en vez de desfragmentar el disco duro de manera tradicional le pasa el comando Trim pulsando el botón Optimizar de la utilidad. Sirve también para todo
+
+Limitaciones
+En Windows 2000 y sistemas posteriores, el Desfragmentador de disco ha sufrido las siguientes limitaciones:
+
+No desfragmenta archivos de la papelera de reciclaje. Tampoco puede desfragmentar archivos en uso.
+No se puede analizar más de un volumen a la vez, ni pueden ejecutarse dos instancias de la aplicación a la vez.6​
+Solo pueden desfragmentarse los volúmenes locales; no se soportan volúmenes extraíbles o de red.6​
+Las versiones GUI anteriores a la incluida con Windows Vista no se pueden ejecutar como tareas programadas; sin embargo, la utilidad de línea de comandos desde Windows XP puede ser ejecutada como tarea programada.
+Además, la versión para Windows 2000 tenía las siguientes limitaciones, que se retiraron en la versión para Windows XP:6​
+
+No se podían defragmentar volúmenes NTFS con tamaños de clúster mayores de 4 kilobytes (KB).
+No era posible afinar el movimiento de datos NTFS no comprimidos. Al mover el clúster de un archivo se desplazaba también los 4 KB del archivo en que se contenía el clúster.
+Los metadatos NTFS, como la Tabla Maestra de Archivos (MFT), o los metadatos que describen los contenidos de un directorio, no se desfragmentaban.
+Los archivos cifrados con EFS no se desfragmentaban.
+Véase también
+Desfragmentación
+Fragmentación de un sistema de fic

@@ -8,6 +8,15 @@ public class Huffman {
 	private ArrayList<Dato> alfabeto;
 	private ArrayList<Nodo> arbol;
 	private File archivo;
+	private String cadenaComprimida="";
+
+	public String getCadenaComprimida() {
+		return cadenaComprimida;
+	}
+
+	public void setCadenaComprimida(String cadenaComprimida) {
+		this.cadenaComprimida = cadenaComprimida;
+	}
 
 	public Huffman(File file) {
 		this.archivo = file;
@@ -111,7 +120,7 @@ public class Huffman {
 		for (Nodo nodo : arbol) {
 			
 			if(nodo.getDato().getCaracter()==c) {
-				cadena=cadena.concat(armarCadenaDeBits(nodo));
+				cadena=armarCadenaDeBits(nodo);
 				return cadena;
 			}
 			
@@ -120,6 +129,19 @@ public class Huffman {
 
 		return "nope"; 
 	}
+	
+	private String reverse(String cadena) {
+
+		String cadenaAux="";
+		for (int i=0;i<cadena.length();i++) {
+			cadenaAux=cadenaAux + cadena.charAt(cadena.length()-1-i);
+		}
+		
+		
+		return cadenaAux;
+	}
+	
+	
 	
 	
 	private String armarCadenaDeBits(Nodo nodo) {
@@ -131,7 +153,7 @@ public class Huffman {
 			cadena=cadena + nodo.getBit();
 			nodo=nodo.getNodoPadre();
 		}
-		return cadena+nodo.getBit();
+		return reverse(cadena);
 		
 		
 		
@@ -154,7 +176,6 @@ public class Huffman {
 	public int comprimir() throws IOException {
 
 		FileReader fr = new FileReader(archivo);
-
 		int c = fr.read();
 		while (c != -1) {
 			agregarCaracter((char) c);
@@ -165,6 +186,20 @@ public class Huffman {
 		crearArbol();
 //		System.out.println(arbol.get(0).getDato().getFrecuencia());
 //		System.out.println(arbol.size());
+		
+		fr.close();
+		fr = new FileReader(archivo);
+		
+		c=fr.read();
+		while (c != -1) {
+			cadenaComprimida=cadenaComprimida+codificar((char)c);
+			c = fr.read();
+		}
+		
+		
+		
+		
+		
 		fr.close();
 
 		return 0;

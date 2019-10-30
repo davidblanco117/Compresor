@@ -2,6 +2,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Compresor {
@@ -36,7 +37,6 @@ public class Compresor {
 
 			if(j==8) {
 				ds.write(cadenaDeByte);
-				System.out.print((char)cadenaDeByte);
 				cadenaDeByte= (byte)(' '>>>6);
 				j=0;
 			}
@@ -60,35 +60,13 @@ public class Compresor {
 	
 	
 
-	public void comprimir(File file) {
+	public void comprimir(File file) throws IOException {
 
-		FileReader fr;
-		String cadena = "";
-
-		try {
-			int c;
-			fr = new FileReader(file);
-			c = fr.read();
-			while (c != -1) {
-				String aux = String.format(Integer.toBinaryString(c));
-
-				if (aux.length() == 7)
-					cadena = cadena.concat("0" + aux);
-
-				else if (aux.length() == 6)
-					cadena = cadena.concat("00" + aux);
-
-				c = fr.read();
-			}
-
-			fr.close();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;
-		}
-
+		Huffman huffman= new Huffman(file);
+		
+		huffman.comprimir();
+		grabarBinario(huffman.getCadenaComprimida(), new FileOutputStream(new File(file.getName()+"_comp.dat")));
+		
 	}
 
 }

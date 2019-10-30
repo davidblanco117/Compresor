@@ -15,11 +15,13 @@ public class main {
 //		comp.grabarBinario("01001000011011110110110001100001001000000111010001101111011001000110111100100000011001010110110000100000"
 //				+ "0110110101110101011011100110010001101111",new FileOutputStream( new File("salida.dat")));
 	
+		
+		comp.comprimir(new File("aaa.txt"));
 		Huffman huff= new Huffman(new File("huffman.txt"));
 		huff.comprimir();
 
 		huff.mostrarAlfabeto();
-		System.out.println(huff.codificar('e'));
+		System.out.println(huff.codificar('o'));
 	
 	
 	}
