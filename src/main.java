@@ -1,9 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class main {
+public class Main {
 	
 
 	
@@ -17,11 +16,11 @@ public class main {
 	
 		
 		comp.comprimir(new File("aaa.txt"));
-		Huffman huff= new Huffman(new File("huffman.txt"));
+		Huffman huff= new Huffman(new File("bbb.txt"));
 		huff.comprimir();
 
 		huff.mostrarAlfabeto();
-		System.out.println(huff.codificar('o'));
+		System.out.println(huff.codificar('a'));
 	
 	
 	}
